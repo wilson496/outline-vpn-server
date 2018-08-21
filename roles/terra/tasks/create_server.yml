@@ -1,0 +1,24 @@
+---
+
+#- name: Plan the creation of the ec2 server
+ # terraform:
+  #  project_path: '{{ playbook_dir }}'
+  #  plan_file: 'amazon.tf'
+  #  lock: true
+  #  state: planned
+
+- name: Create ec2 server for VPN  
+  terraform:
+    project_path: '{{ playbook_dir }}'
+    state: present
+  register: terraform
+- debug: var="{{terraform.outputs}}"
+
+#- name: Destroy the ec2 server for VPN
+#  terraform:
+#    project_path: '{{ playbook_dir }}'
+#    lock: true
+#    state: absent
+
+#TODO: Ensure that terraform plan/apply/delete output is visible through ansible. 
+#TODO: Be able to collect details from terraform output and use to configure server

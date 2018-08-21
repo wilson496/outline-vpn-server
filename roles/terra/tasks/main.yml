@@ -1,0 +1,3 @@
+---
+- name: Create ec2 server for VPN
+  include: tasks/create_server.yml
