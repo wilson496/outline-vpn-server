@@ -9,7 +9,7 @@ resource "aws_vpc" "main" {
 resource "aws_security_group" "outline_aws_sg" {
   name        = "outline"
   description = "outline security group"
-  vpc_id      = "${aws_vpc.main.id}"
+  #vpc_id      = "${aws_vpc.main.id}"
 
   ingress {
     from_port   = 0
@@ -28,12 +28,17 @@ resource "aws_security_group" "outline_aws_sg" {
 
 
 
-resource "aws_instance" "example" {
-    ami = "ami-2757f631"
+resource "aws_instance" "outline_vpn_server" {
+    ami = "ami-3ecc8f46"
     instance_type = "t2.micro"
-    security_groups = ["${aws_security_group.outline_aws_sg.id}"]
-
+    vpc_security_group_ids  = ["${aws_security_group.outline_aws_sg.id}"]
+    key_name = "cameron-iam-keypair"
     tags {
-        Name = "Testingthisout"
+        Name = "Outline_VPN_Server"
     }
+}
+
+resource "aws_eip" "lb" {
+  instance = "${aws_instance.outline_vpn_server.id}"
+  vpc      = true
 }

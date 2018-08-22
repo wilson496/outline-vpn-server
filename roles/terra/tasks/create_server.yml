@@ -11,8 +11,26 @@
   terraform:
     project_path: '{{ playbook_dir }}'
     state: present
-  register: terraform
-- debug: var="{{terraform.outputs}}"
+
+- include_vars:
+        file: terraform.tfstate
+        name: tfstate
+  
+- debug: var=tfstate.modules[0].resources["aws_instance.outline_vpn_server"].primary.attributes.public_ip
+
+#- hosts: "{{ tfstate.modules[0].resources[aws_instance.outline_vpn_server].primary.attributes.public_ip }}"
+#  remote_user: centos
+#  become: yes 
+ 
+ 
+ #- name: ensure a list of packages installed
+ # yum:
+ #   name: "{{ packages }}"
+ # vars:
+ #   packages:
+ #   - wget
+ #   - docker
+
 
 #- name: Destroy the ec2 server for VPN
 #  terraform:
