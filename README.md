@@ -1,2 +1,2 @@
-# ansible-tooling
-Provisioning and deployment for nwHacks2017 project into AWS
+# Project Description
+This project leverages Ansible and Terraform for the orchaestration and configuration of a server to be used with Outline VPN.
